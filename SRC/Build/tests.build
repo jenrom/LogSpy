@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="atlone.hapi.tests">
+
+  <!--This properties decides what type of unit tests should be run-->
+  <property name="run.acceptance.tests" value="true"/>
+  <property name="run.integration.tests" value="true"/>
+  <property name="run.unit.tests" value="true"/>
+  
+  <property name="test.lib" value="${bin.dir}\Tests.dll"/>
+  <property name="tests.src.dir" value="${src.dir}\Tests\LogSpy.Tests"/>
+  <property name="test.results" value="${bin.dir}"></property>
+  <property name="unit.tests.result" value="${test.results}\unittests.xml"/>
+  <property name="nUnit.console" value="${libs.dir}\Nunit\nunit-console.exe"/>
+  <property name="nUnit.console.args" value="${test.lib} /xml:${unit.tests.result} /noshadow"/>
+  <property name="nCover.dir" value="${tools.dir}\NCover"></property>
+  <property name="nCover.console" value="${nCover.dir}\NCover.Console.exe"></property>
+  <property name="nCoverexplorer.console" value="${nCover.dir}\NCoverExplorer.Console.exe"></property>
+  <property name="coverage.dir" value="${bin.dir}"/>
+  <property name="coverage.file" value="${coverage.dir}\coverage.xml"></property>
+  <property name="fail.onerror" value="true"/>
+   
+
+  <fileset id="test.references">
+    <include name="${libs.dir}\NUnit\nunit.framework.dll" />
+    <include name="${libs.dir}\RhinoMocks\Rhino.Mocks.dll" />
+    <include name="${bin.dir}\*.dll" />
+    <include name="${bin.dir}\*.exe" />
+    <include name="${libs.dir}\log4net\log4net.dll}"/>
+  </fileset>
+  
+  <target name="compile.tests" description="compiles all tests project into one library" depends="move.assets"  >
+    <echo message="${libs.dir}\NUnit\nunit.framework.dll"></echo>
+    <echo message="compiling the ${test.lib} with: Integration Tests: ${run.integration.tests}; Unit Tests: ${run.unit.tests}; Acceptance Tests: ${run.acceptance.tests}"/>
+    <csc output="${test.lib}" target="library"  debug="${debug}">
+      <sources basedir="${tests.src.dir}">
+        <include name="Utility\**\*.cs"/>
+        <include name="*.cs"/>
+        <include name="Unit\**\*.cs" if="${run.unit.tests}"/>
+        <include name="Integration\**\*.cs" if="${run.integration.tests}"/>
+        <include name="Acceptance\**\*.cs" if="${run.unit.tests}"/>
+      </sources>
+      <references refid="test.references"/>
+    </csc>
+  </target>
+
+  <target name="setup.tests" description="copies all test related tools and libs to bin folder" depends="compile.tests">
+    <copy todir="${bin.dir}" flatten="true">
+      <fileset refid="test.references"/>
+    </copy>
+  </target>
+  
+  <target name="run.tc.tests">
+    <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
+      <echo message="Using TeamCity tests"></echo>
+      <exec program="${teamcity.dotnet.nunitlauncher2.0}">
+        <arg file="${test.lib}"/>
+      </exec>
+    </if>
+  </target>
+
+  <target name="run.tests.with.coverage" depends="setup.tests">
+    <call target="run.tc.tests"></call>
+    <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
+      <echo message="Using TeamCity nunit"></echo>
+      <property name="nunit.console" value="${teamcity.dotnet.nunitlauncher2.0}" />
+      <property name="nUnit.console.args" value="${test.lib}"></property>
+    </if>
+    <loadtasks assembly="${nCover.dir}\NCoverExplorer.NAntTasks.dll"></loadtasks>
+    <property name="test.failed" value="false"/>
+    <property name="fail.message" value=""/>
+    <trycatch>
+      <try>
+        <ncover program="${nCover.console}"
+            logLevel="Quiet"
+						commandLineExe="${nUnit.console}"
+						commandLineArgs="${nUnit.console.args}"
+						workingDirectory="${bin.dir}"
+						coverageFile="${coverage.file}">
+        </ncover>
+
+      </try>
+      <catch property="failure">
+        <echo message="One or more tests failed: ${failure}"/>
+        <property name="fail.message" value="${failure}"/>
+        <property name="test.failed" value="true"/>
+      </catch>
+    </trycatch>
+    <property name="nant.onfailure" value=""/>
+    <if test="${not property::exists('teamcity.dotnet.nunitlauncher2.0')}">
+      <call target="genarate.nunit.report"/>
+    </if>
+    <call target="generate.ncover.report"/>
+    <fail if="${test.failed}" message="One or more tests failed under code coverage.\r\n"/>
+  </target>
+  
+  <target name="util.ncoverexplorer.nant">
+    <echo message="Starting NCoverExplorer report generation..."/>
+    <ncoverexplorer program="${nCoverexplorer.console}"
+					projectName="NCoverExplorer"
+					reportType="4"
+					outputDir="${coverage.dir}"
+					xmlReportName="CoverageReport.xml"
+					htmlReportName="CoverageReport.html"
+					mergeFileName="CoverageMerge.xml"
+					showExcluded="True"
+					satisfactoryCoverage="80" >
+      <fileset>
+        <include name="${coverage.file}"/>
+      </fileset>
+      <exclusions>
+        <exclusion type="Assembly" pattern="*Test*" />
+      </exclusions>
+    </ncoverexplorer>
+  </target>
+
+  <target name="genarate.nunit.report">
+    <nunit2report todir="${test.results}">
+      <fileset>
+        <include name="${unit.tests.result}"/>
+      </fileset>
+    </nunit2report>
+  </target>
+
+  <target name="generate.ncover.report">
+    <echo message="Starting NCoverExplorer report generation..."/>
+    <ncoverexplorer program="${nCoverexplorer.console}"
+						projectName="NCoverExplorer"
+						reportType="4"
+						outputDir="${test.results}"
+						xmlReportName="CoverageReport.xml"
+						htmlReportName="CoverageReport.html"
+						mergeFileName="CoverageMerge.xml"
+						showExcluded="True"
+						satisfactoryCoverage="80" >
+      <fileset>
+        <include name="${coverage.file}"/>
+      </fileset>
+      <exclusions>
+        <exclusion type="Assembly" pattern="*Test*" />
+      </exclusions>
+    </ncoverexplorer>
+  </target>
+</project>

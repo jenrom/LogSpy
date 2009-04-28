@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="LogSpy" default="all">
+  <property name="debug" value="true"/>
+  <property name="nant.settings.currentframework" value="net-3.5" />
+  <property name="base.dir" value="${directory::get-parent-directory(project::get-base-directory())}" />
+  <property name="bin.dir" value="${base.dir}\bin"/>
+  <property name="libs.dir" value="${base.dir}\..\libs" />
+  <property name="tools.dir" value="${base.dir}\..\libs" />
+  <property name="src.dir" value="${base.dir}"/>
+  <property name="app.src.dir" value="${src.dir }\App"/>
+  <property name="assembly.info.path" value="${src.dir}\CommonAssemblyInfo.cs"/>
+  <property name="project.version" value="0.1.0.0"></property>
+  <property name="project.config" value="debug" />
+  <property name="solution.file" value="${base.dir}\LogSpy.sln"/>
+  <property name="fail.onerror" value="true"/>
+  <property name="code.analysis.dir" value="${bin.dir}\CodeAnalysis"/>
+  <property name="ndepend.dir" value="${libs.dir}\NDepend\"></property>
+  <property name="fxcop.analysis.dir" value="${bin.dir}\fxcop"></property>
+  <property name="fxcop.dir" value="${tools.dir}\FxCop"></property>
+  <include buildfile="tests.build"/>
+  <include buildfile="deploy.build"/>
+
+  <target name="all" description="Runs all accesible targets">
+    <call target="run.tests.with.coverage"/>
+    <call target="code.analysis"/>
+  </target>
+  
+  <target name="unit.tests"  description="runs the tests without code coverage">
+    <call target="move.assets"/>
+    <call target="run.tests.without.coverage"/>
+  </target>
+  
+
+  <target name="clean" description="Cleans the previous build assets">
+    <echo message="Deleting old assets"></echo>
+    <delete dir="${bin.dir}" failonerror="false"></delete>
+  </target>
+  
+  <target name="init" description="initializes the build structure" depends="clean, version">
+    <if test="${not debug}">
+      <property name="project.config" value="release" />
+    </if>
+    <echo message="Creating bin directory"></echo>
+    <mkdir dir="${bin.dir}"/>
+  </target>
+
+  <target name="version">
+    <echo message="Checking the version number provided by build server"></echo>
+    <!--Team City-->
+    <if test="${property::exists('build.number')}">
+      <property name="project.version" value="${build.number}"/>
+    </if>
+  </target>
+
+  <target name="assembly.info" depends="version">
+      <echo message="Genearting the assembly info with version ${project.version}"/>
+      <asminfo output="${assembly.info.path}" language="CSharp">
+        <imports>
+          <import namespace="System" />
+          <import namespace="System.Reflection" />
+          <import namespace="System.Runtime.InteropServices"/>
+        </imports>
+        <attributes>
+          <attribute type="AssemblyVersionAttribute" value="${project.version}" />
+          <attribute type="AssemblyFileVersionAttribute" value="${project.version}"/>
+          <attribute type="AssemblyCopyrightAttribute" value="Copyright (c) 2005 Atlone." />
+          <attribute type="AssemblyCompanyAttribute" value="LogSpy" />
+          <attribute type="AssemblyProductAttribute" value="LogSpy" />
+          <attribute type="ComVisibleAttribute" value="false"/>
+          <attribute type="CLSCompliantAttribute" value="true"/>
+        </attributes>
+      </asminfo>
+  </target>
+
+  <target name="compile" depends="init, assembly.info">
+    <echo message="Compiling the solution ${solution.file} in ${project.config} mode..." />
+    <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"
+        commandline="${solution.file} /t:Clean /p:Configuration=${project.config} /v:q" workingdir="${base.dir}" />
+    <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe"
+				  commandline="${solution.file} /t:Rebuild /p:Configuration=${project.config} /v:q" workingdir="${base.dir}" />    
+  </target>
+  
+  <target name="move.assets" depends="compile">
+    <echo message="Moving the compile assets from ${app.src.dir}/** to ${bin.dir}...." />
+    <copy todir="${bin.dir}" flatten="true">
+      <fileset basedir="${app.src.dir}">
+        <include name="/**/bin/${project.config}/**" />
+        <include name="*.config"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="code.analysis">
+    <mkdir dir="${fxcop.analysis.dir}" failonerror="false"/>
+    <exec program="${fxcop.dir}\FxCopCmd.exe"
+          commandline="/project:${base.dir}\build\logspy.fxcop /out:${fxcop.analysis.dir}\fxcop.report.xml"
+          basedir="${fxcop.dir}" ></exec>
+    <echo message="##teamcity[importData type='FxCop' path='${fxcop.analysis.dir}\fxcop.report.xml']"></echo>
+    <loadtasks assembly="${ndepend.dir}\NAnt\NDepend.Build.NAntTasks.dll"></loadtasks>
+    <NDepend NDependConsoleExePath="${ndepend.dir}"
+             ProjectFilePath="${base.dir}\build\NDependLogSpy.xml"/>
+  </target>
+</project>

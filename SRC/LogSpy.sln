@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{09E34E04-C563-4A24-91FA-931CB5E1BAF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4098B354-098B-42AB-85FE-F50847799D48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{F258C16D-EC74-4485-9CA0-ACF95E3D1133}"
+	ProjectSection(SolutionItems) = preProject
+		Build\deploy.build = Build\deploy.build
+		Build\main.build = Build\main.build
+		Build\tests.build = Build\tests.build
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSpy.UI", "App\LogSpy.UI\LogSpy.UI.csproj", "{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSpy.Tests", "Tests\LogSpy.Tests\LogSpy.Tests.csproj", "{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB} = {09E34E04-C563-4A24-91FA-931CB5E1BAF7}
+		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB} = {4098B354-098B-42AB-85FE-F50847799D48}
+	EndGlobalSection
+EndGlobal
