@@ -1,18 +1,21 @@
 This directory contains all required external libraries that are used in this project and tools used for building the application
 
-//Automated Tests
+//Automated Tests and Analysis
  - Rhino Mocks 3.5
  - Nunit
+ - NCover
  - Project White
- - Fitnesse and Fit
- - NDepend OR Fxop
+ - NDepend
+ - Fxop
+
+//Build tools
+ - NAnt
 
 //WPF
  - PRISM
- - Calibrun 
- - WpfMole
 
 //Common development tools
  - Log4Net
- - StructureMap, Unity
+ - StructureMap
+ - Common service locator
  
