@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSpy.UI", "App\LogSpy.UI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSpy.Tests", "Tests\LogSpy.Tests\LogSpy.Tests.csproj", "{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSpy.Core", "App\LogSpy.Core\LogSpy.Core.csproj", "{168C699A-CF28-49F4-9C02-1D8FB8D40A0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,12 +32,17 @@ Global
 		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{168C699A-CF28-49F4-9C02-1D8FB8D40A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{168C699A-CF28-49F4-9C02-1D8FB8D40A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{168C699A-CF28-49F4-9C02-1D8FB8D40A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{168C699A-CF28-49F4-9C02-1D8FB8D40A0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{94C12343-2ABC-4E9B-BBB5-6B310DAE56EB} = {09E34E04-C563-4A24-91FA-931CB5E1BAF7}
+		{168C699A-CF28-49F4-9C02-1D8FB8D40A0D} = {09E34E04-C563-4A24-91FA-931CB5E1BAF7}
 		{CF0DDF24-3A68-4D22-9C59-7968E9C594CB} = {4098B354-098B-42AB-85FE-F50847799D48}
 	EndGlobalSection
 EndGlobal

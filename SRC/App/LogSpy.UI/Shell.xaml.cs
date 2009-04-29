@@ -9,17 +9,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LogSpy.UI
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Shell.xaml
     /// </summary>
-    public sealed partial class Window1 : Window
+    public partial class Shell : Window
     {
-        public Window1()
+        public Shell()
         {
             InitializeComponent();
         }
