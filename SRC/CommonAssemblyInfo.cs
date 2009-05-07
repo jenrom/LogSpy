@@ -12,8 +12,8 @@ using System.Runtime.InteropServices;
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: AssemblyVersionAttribute("0.0.0.0")]
-[assembly: AssemblyFileVersionAttribute("0.0.0.0")]
+[assembly: AssemblyVersionAttribute("0.1.0.0")]
+[assembly: AssemblyFileVersionAttribute("0.1.0.0")]
 [assembly: AssemblyCopyrightAttribute("Copyright (c) 2005 Atlone.")]
 [assembly: AssemblyCompanyAttribute("LogSpy")]
 [assembly: AssemblyProductAttribute("LogSpy")]

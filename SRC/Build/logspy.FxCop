@@ -21,12 +21,13 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
-  <Target Name="$(ProjectDir)/../bin/LogSpy.UI.exe" Analyze="False" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../bin/LogSpy.Core.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../bin/LogSpy.UI.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
    <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
-   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="False" AllRulesEnabled="False" />
    <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
@@ -40,20 +41,23 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Targets>
+   <Target Name="$(ProjectDir)/../bin/LogSpy.Core.dll">
+    <Modules>
+     <Module Name="logspy.core.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2009-05-07 20:52:34Z">
+        <Issue Name="NoStrongName">
+         <Item>'LogSpy.Core.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/../bin/LogSpy.UI.exe">
     <Modules>
      <Module Name="logspy.ui.exe">
       <Messages>
-       <Message TypeName="MarkAssembliesWithAssemblyVersion" Category="Microsoft.Design" CheckId="CA1016" Created="2009-04-24 05:53:43Z">
-        <Issue>
-         <Item>'LogSpy.UI.exe'</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2009-04-24 05:53:43Z">
-        <Issue>
-         <Item>'LogSpy.UI.exe'</Item>
-        </Issue>
-       </Message>
        <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2009-04-24 05:53:43Z">
         <Issue Name="NoStrongName">
          <Item>'LogSpy.UI.exe'</Item>
@@ -64,27 +68,17 @@
          </User>
         </Notes>
        </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Status="Excluded" Created="2009-04-24 05:53:43Z">
+        <Issue>
+         <Item>'LogSpy.UI.exe'</Item>
+        </Issue>
+        <Notes>
+         <User Name="Administrator">
+          <Note Id="1" />
+         </User>
+        </Notes>
+       </Message>
       </Messages>
-      <Namespaces>
-       <Namespace Name="LogSpy.UI">
-        <Types>
-         <Type Name="Window1">
-          <Members>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2009-04-24 05:53:43Z">
-              <Issue>
-               <Item>'Window1'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
      </Module>
     </Modules>
    </Target>
@@ -92,17 +86,12 @@
   <Notes>
    <User Name="Administrator">
     <Note Id="0" Modified="2009-04-24 05:54:09Z">We don't need to have a strongly typed assembly</Note>
+    <Note Id="1" Modified="2009-05-07 20:53:25Z">We don't care about resources</Note>
    </User>
   </Notes>
   <Rules>
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
     <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
-   </Rule>
-   <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
-    <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithAssemblyVersion" Category="Microsoft.Design" CheckId="CA1016">
-    <Resolution Name="Default">Add an AssemblyVersion attribute to {0}.</Resolution>
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
