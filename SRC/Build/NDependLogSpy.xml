@@ -2,7 +2,7 @@
 <NDepend AppName="LogSpy" Platform="DotNet">
   <OutputDir KeepHistoric="True" KeepXmlFiles="True" ViewReport="True">..\..\SRC\Bin\NDependOut</OutputDir>
   <Assemblies>
-    <Name>LogSpy.UI</Name>
+    <Name>LogSpy</Name>
     <Name>LogSpy.Core</Name>
   </Assemblies>
   <FrameworkAssemblies>

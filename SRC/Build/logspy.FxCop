@@ -22,7 +22,7 @@
  </ProjectOptions>
  <Targets>
   <Target Name="$(ProjectDir)/../bin/LogSpy.Core.dll" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/../bin/LogSpy.UI.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../bin/LogSpy.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -54,39 +54,52 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/../bin/LogSpy.UI.exe">
+   <Target Name="$(ProjectDir)/../bin/LogSpy.exe">
     <Modules>
-     <Module Name="logspy.ui.exe">
+     <Module Name="logspy.exe">
       <Messages>
-       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2009-04-24 05:53:43Z">
-        <Issue Name="NoStrongName">
-         <Item>'LogSpy.UI.exe'</Item>
-        </Issue>
-        <Notes>
-         <User Name="Administrator">
-          <Note Id="0" />
-         </User>
-        </Notes>
-       </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Status="Excluded" Created="2009-04-24 05:53:43Z">
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2009-05-08 05:49:18Z">
         <Issue>
-         <Item>'LogSpy.UI.exe'</Item>
+         <Item>'LogSpy.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2009-05-08 05:49:18Z">
+        <Issue Name="NoStrongName">
+         <Item>'LogSpy.exe'</Item>
         </Issue>
         <Notes>
          <User Name="Administrator">
-          <Note Id="1" />
+          <Note Id="2" />
          </User>
         </Notes>
        </Message>
       </Messages>
+      <Namespaces>
+       <Namespace Name="LogSpy.UI">
+        <Types>
+         <Type Name="Shell">
+          <Members>
+           <Member Name="#WindowName">
+            <Messages>
+             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2009-05-08 05:49:18Z">
+              <Issue>
+               <Item>'Shell.WindowName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Notes>
    <User Name="Administrator">
-    <Note Id="0" Modified="2009-04-24 05:54:09Z">We don't need to have a strongly typed assembly</Note>
-    <Note Id="1" Modified="2009-05-07 20:53:25Z">We don't care about resources</Note>
+    <Note Id="2" Modified="2009-05-08 05:49:54Z">We don't care at least now for the strongly assemblies</Note>
    </User>
   </Notes>
   <Rules>
@@ -95,6 +108,9 @@
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
+   <Rule TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211">
+    <Resolution Name="Default">Consider making {0} non-public or a constant.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

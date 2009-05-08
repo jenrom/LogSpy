@@ -6,7 +6,7 @@
   <property name="run.integration.tests" value="true"/>
   <property name="run.unit.tests" value="true"/>
   
-  <property name="test.lib" value="${bin.dir}\Tests.dll"/>
+  <property name="test.lib" value="${bin.dir}\LogSpy.Tests.dll"/>
   <property name="tests.src.dir" value="${src.dir}\Tests\LogSpy.Tests"/>
   <property name="test.results" value="${bin.dir}"></property>
   <property name="unit.tests.result" value="${test.results}\unittests.xml"/>
@@ -18,6 +18,7 @@
   <property name="coverage.dir" value="${bin.dir}"/>
   <property name="coverage.file" value="${coverage.dir}\coverage.xml"></property>
   <property name="fail.onerror" value="true"/>
+  <property name="custom.tests" value="false"></property>
    
 
   <fileset id="test.references">
@@ -25,10 +26,14 @@
     <include name="${libs.dir}\RhinoMocks\Rhino.Mocks.dll" />
     <include name="${bin.dir}\*.dll" />
     <include name="${bin.dir}\*.exe" />
-    <include name="${libs.dir}\log4net\log4net.dll}"/>
+    <include name="${libs.dir}\log4net\log4net.dll"/>
+    <include name="${libs.dir}\white\White.NUnit.dll"/>
+    <include name="${libs.dir}\white\core.dll"/>
+    <include name="${bin.dir}\LogSpy.core"/>
+    <include name="${bin.dir}\LogSpy.exe"/>
   </fileset>
   
-  <target name="compile.tests" description="compiles all tests project into one library" depends="move.assets"  >
+  <target name="compile.tests" description="compiles all tests project into one library" depends="move.assets" if="${custom.tests}">
     <echo message="${libs.dir}\NUnit\nunit.framework.dll"></echo>
     <echo message="compiling the ${test.lib} with: Integration Tests: ${run.integration.tests}; Unit Tests: ${run.unit.tests}; Acceptance Tests: ${run.acceptance.tests}"/>
     <csc output="${test.lib}" target="library"  debug="${debug}">
@@ -44,8 +49,14 @@
   </target>
 
   <target name="setup.tests" description="copies all test related tools and libs to bin folder" depends="compile.tests">
-    <copy todir="${bin.dir}" flatten="true">
+    <copy todir="${bin.dir}" flatten="true" if="${custom.tests}">
       <fileset refid="test.references"/>
+    </copy>
+    <copy todir="${bin.dir}"  flatten="true"  if="${not custom.tests}">
+      <fileset basedir="${tests.src.dir}">
+        <include name="/**/bin/${project.config}/**" />
+        <include name="*.config"/>
+      </fileset>
     </copy>
   </target>
   

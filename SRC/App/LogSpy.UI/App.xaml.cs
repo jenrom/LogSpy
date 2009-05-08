@@ -15,6 +15,8 @@ namespace LogSpy.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            var shell = new Shell();
+            shell.Show();
         }
     }
 }
