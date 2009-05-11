@@ -87,6 +87,10 @@
 						commandLineArgs="${nUnit.console.args}"
 						workingDirectory="${bin.dir}"
 						coverageFile="${coverage.file}">
+          <assemblies basedir="${bin.dir}">
+            <include name="LogSpy*.dll"></include>
+            <exclude name="*Tests*.dll"></exclude>
+          </assemblies>
         </ncover>
 
       </try>
@@ -113,13 +117,18 @@
 					xmlReportName="CoverageReport.xml"
 					htmlReportName="CoverageReport.html"
 					mergeFileName="CoverageMerge.xml"
-					showExcluded="True"
+					showExcluded="False"
 					satisfactoryCoverage="80" >
       <fileset>
         <include name="${coverage.file}"/>
       </fileset>
       <exclusions>
         <exclusion type="Assembly" pattern="*Test*" />
+        <exclusion type="Assembly" pattern="*Castle*" />
+        <exclusion type="Assembly" pattern="*White*" />
+        <exclusion type="Assembly" pattern="*Bricks*" />
+        <exclusion type="Assembly" pattern="*Microsoft*" />
+        <exclusion type="Assembly" pattern="*Log4Net*" />
       </exclusions>
     </ncoverexplorer>
   </target>
