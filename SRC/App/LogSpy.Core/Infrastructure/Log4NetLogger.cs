@@ -32,6 +32,7 @@ namespace LogSpy.Core.Infrastructure
         /// <param name="destinationLog"></param>
         public Log4NetLogger(ILog destinationLog)
         {
+            if (destinationLog == null) throw new ArgumentNullException("destinationLog");
             this.destinationLog = destinationLog;
         }
 
@@ -43,10 +44,6 @@ namespace LogSpy.Core.Infrastructure
         /// <param name="priority">The priority of the entry.</param>
         public void Log(string message, Category category, Priority priority)
         {
-            if(destinationLog == null)
-            {
-                throw new InvalidOperationException("The destination log was not initialized");
-            }
             switch(category)
             {
                 case Category.Debug:

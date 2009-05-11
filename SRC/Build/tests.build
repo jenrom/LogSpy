@@ -89,6 +89,7 @@
 						coverageFile="${coverage.file}">
           <assemblies basedir="${bin.dir}">
             <include name="LogSpy*.dll"></include>
+            <include name="LogSpy.exe"></include>
             <exclude name="*Tests*.dll"></exclude>
           </assemblies>
         </ncover>
