@@ -22,37 +22,37 @@
    
 
   <fileset id="test.references">
-    <include name="${libs.dir}\NUnit\nunit.framework.dll" />
+    <!--<include name="${libs.dir}\NUnit\nunit.framework.dll" />
     <include name="${libs.dir}\RhinoMocks\Rhino.Mocks.dll" />
-    <include name="${bin.dir}\*.dll" />
-    <include name="${bin.dir}\*.exe" />
     <include name="${libs.dir}\log4net\log4net.dll"/>
     <include name="${libs.dir}\white\White.NUnit.dll"/>
     <include name="${libs.dir}\white\core.dll"/>
     <include name="${bin.dir}\LogSpy.core"/>
     <include name="${bin.dir}\LogSpy.exe"/>
+    <include name="${bin.dir}\Microsoft.Practices.Composite.dll"/>
+    <include name="${bin.dir}\Microsoft.Practices.ServiceLocation.dll"></include>-->
+    <include name="${bin.dir}\*.dll"></include>
+    <include name="${bin.dir}\*.exe"></include>
   </fileset>
   
-  <target name="compile.tests" description="compiles all tests project into one library" depends="move.assets" if="${custom.tests}">
+  <target name="compile.tests" description="compiles all tests project into one library">
     <echo message="${libs.dir}\NUnit\nunit.framework.dll"></echo>
     <echo message="compiling the ${test.lib} with: Integration Tests: ${run.integration.tests}; Unit Tests: ${run.unit.tests}; Acceptance Tests: ${run.acceptance.tests}"/>
+    <delete file="${test.lib}"  failonerror="false"  ></delete>
     <csc output="${test.lib}" target="library"  debug="${debug}">
       <sources basedir="${tests.src.dir}">
-        <include name="Utility\**\*.cs"/>
-        <include name="*.cs"/>
-        <include name="Unit\**\*.cs" if="${run.unit.tests}"/>
-        <include name="Integration\**\*.cs" if="${run.integration.tests}"/>
-        <include name="Acceptance\**\*.cs" if="${run.unit.tests}"/>
+        <include name="**\*.cs"/>
+        <exclude name="Unit\**\*.cs" if="${not run.unit.tests}"/>
+        <exclude name="Integration\**\*.cs" if="${not run.integration.tests}"/>
+        <exclude name="Acceptance\**\*.cs" if="${not run.acceptance.tests}"/>
       </sources>
       <references refid="test.references"/>
     </csc>
+    <echo message="Compiled!!!!!!!!" ></echo>
   </target>
 
-  <target name="setup.tests" description="copies all test related tools and libs to bin folder" depends="compile.tests">
-    <copy todir="${bin.dir}" flatten="true" if="${custom.tests}">
-      <fileset refid="test.references"/>
-    </copy>
-    <copy todir="${bin.dir}"  flatten="true"  if="${not custom.tests}">
+  <target name="setup.tests" description="copies all test related tools and libs to bin folder">
+    <copy todir="${bin.dir}"  flatten="true" >
       <fileset basedir="${tests.src.dir}">
         <include name="/**/bin/${project.config}/**" />
         <include name="*.config"/>
@@ -66,10 +66,13 @@
       <exec program="${teamcity.dotnet.nunitlauncher2.0}">
         <arg file="${test.lib}"/>
       </exec>
+      <!--Compile tests without acceptance tests for the ncover analysis because when running under TeamCity the acceptance tests crashes-->
+      <property name="run.acceptance.tests" value="false"/>
+      <call target="compile.tests"></call>
     </if>
   </target>
 
-  <target name="run.tests.with.coverage" depends="setup.tests">
+  <target name="run.tests.with.coverage" depends="move.assets setup.tests" >
     <call target="run.tc.tests"></call>
     <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
       <echo message="Using TeamCity nunit"></echo>
