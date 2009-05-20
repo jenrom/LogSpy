@@ -12,6 +12,11 @@ namespace LogSpy.UI
             this.shellView = shellView;
         }
 
+        public IShellView ShellView
+        {
+            get { return shellView; }
+        }
+
         public void Initialize()
         {
             shellView.Display();

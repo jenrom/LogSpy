@@ -13,8 +13,6 @@ namespace LogSpy.UI
             base.OnStartup(e);
             var bootstrapper = new LogSpyBootstrapper();
             bootstrapper.Run();
-            var controller = ServiceLocator.Current.GetInstance<ApplicationController>();
-            controller.Initialize();
         }
     }
 }

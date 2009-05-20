@@ -1,3 +1,5 @@
+using System;
+using System.Windows;
 using LogSpy.Core.Infrastructure;
 using Microsoft.Practices.Composite.Presentation.Regions;
 using Microsoft.Practices.Composite.Regions;
@@ -5,6 +7,7 @@ using StructureMap;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Composite.Presentation.Regions.Behaviors;
 using Microsoft.Practices.Composite.Logging;
+using System.Windows.Controls;
 
 namespace LogSpy.UI
 {
@@ -35,6 +38,15 @@ namespace LogSpy.UI
             SetupContainer();
             SetupRegionRequirements();
             SetupLogger();
+            SetupShell();
+        }
+
+        protected virtual void SetupShell()
+        {
+            var controller = ObjectFactory.GetInstance<ApplicationController>();
+            controller.Initialize();
+            var shell = controller.ShellView;
+            RegionManager.SetRegionManager((DependencyObject) shell, ObjectFactory.GetInstance<IRegionManager>());
         }
 
         protected virtual void SetupRegionRequirements()
@@ -49,6 +61,11 @@ namespace LogSpy.UI
                                             x.ForRequestedType<IRegionBehaviorFactory>().TheDefaultIsConcreteType
                                                 <RegionBehaviorFactory>().AsSingletons();
                                         });
+            var adapterMappings = ObjectFactory.GetInstance<RegionAdapterMappings>();
+            adapterMappings.RegisterMapping(typeof (ContentControl),
+                                            ObjectFactory.GetInstance<ContentControlRegionAdapter>());
+            adapterMappings.RegisterMapping(typeof(ItemsControl),
+                                            ObjectFactory.GetInstance<ItemsControlRegionAdapter>());
             var regionBehaviorFactory = ObjectFactory.GetInstance<IRegionBehaviorFactory>();
             regionBehaviorFactory.AddIfMissing(AutoPopulateRegionBehavior.BehaviorKey,
                                                typeof (AutoPopulateRegionBehavior));

@@ -1,8 +1,11 @@
 ﻿<Window x:Class="LogSpy.UI.ShellView"
+    xmlns:prism="http://www.codeplex.com/CompositeWPF"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="LogSpy" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+    xmlns:UI="clr-namespace:LogSpy.UI"
+    Title="{x:Static Member=UI:ShellView.WindowName}" 
+    WindowStartupLocation="CenterOwner" WindowState="Maximized"  Width="1200" Height="800" >
+    <DockPanel>
+        <ContentControl Name="LogSourceViewContent" prism:RegionManager.RegionName="{x:Static Member=UI:Regions.LogSourceView}"></ContentControl>
+    </DockPanel>
 </Window>
