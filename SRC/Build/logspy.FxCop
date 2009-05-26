@@ -69,18 +69,111 @@
         </Notes>
        </Message>
       </Messages>
+      <Namespaces>
+       <Namespace Name="LogSpy.UI">
+        <Types>
+         <Type Name="Extensions">
+          <Members>
+           <Member Name="#For`1(System.ComponentModel.PropertyChangedEventHandler,!!0,System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,System.Object&gt;&gt;)">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'Extensions.For&lt;T&gt;(this PropertyChangedEventHandler, T, Expression&lt;Func&lt;T, object&gt;&gt;)'</Item>
+               <Item>'Expression&lt;Func&lt;T, object&gt;&gt;'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Administrator">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MenuItemName">
+          <Members>
+           <Member Name="#OpenLogFile">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'MenuItemName.OpenLogFile'</Item>
+               <Item>'MenuItemName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StopListening">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'MenuItemName.StopListening'</Item>
+               <Item>'MenuItemName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShellView">
+          <Members>
+           <Member Name="#LogSourceViewContent">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'ShellView.LogSourceViewContent'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="LogSpy.UI.Views">
+        <Types>
+         <Type Name="Menu">
+          <Members>
+           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
+            <Messages>
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'Menu'</Item>
+               <Item>'IComponentConnector.Connect(int, object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Notes>
    <User Name="Administrator">
+    <Note Id="0" Modified="2009-05-26 06:11:45Z">An expressioin is an exception for that</Note>
     <Note Id="2" Modified="2009-05-08 05:49:54Z">We don't care at least now for the strongly assemblies</Note>
    </User>
   </Notes>
   <Rules>
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
     <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104">
+    <Resolution Name="Default">Remove the read-only designation from {0} or change the field to one that is an immutable reference type. If the reference type {1} is, in fact, immutable, exclude this message.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
+    <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

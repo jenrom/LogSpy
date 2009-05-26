@@ -77,10 +77,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceptance\BaseTests.cs" />
+    <Compile Include="GenericConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Core\Infrastructure\Log4netLoggerTests.cs" />
     <Compile Include="Unit\Core\Infrastructure\LogTests.cs" />
     <Compile Include="Unit\UI\ApplicationControllerTest.cs" />
+    <Compile Include="Unit\UI\MenuControllerTests.cs" />
+    <Compile Include="Unit\UI\MenuItemTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\App\LogSpy.Core\LogSpy.Core.csproj">
