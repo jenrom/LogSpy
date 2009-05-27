@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
+
 namespace LogSpy.UI
 {
     public class MenuItem: INotifyPropertyChanged
@@ -13,6 +14,17 @@ namespace LogSpy.UI
             if (name == null) throw new ArgumentNullException("name");
             DisplayText = displayText;
             Name = name;
+            Command = new DisabledCommand();
+        }
+
+        public MenuItem(string displayText, MenuItemName name, ICommand command)
+        {
+            if (displayText == null) throw new ArgumentNullException("displayText");
+            if (name == null) throw new ArgumentNullException("name");
+            if (command == null) throw new ArgumentNullException("command");
+            DisplayText = displayText;
+            Name = name;
+            Command = command;
         }
 
         public string DisplayText { get; private set; }
@@ -56,6 +68,21 @@ namespace LogSpy.UI
         public override int GetHashCode()
         {
             return (Name != null ? Name.GetHashCode() : 0);
+        }
+
+        private class DisabledCommand : ICommand
+        {
+            public void Execute(object parameter)
+            {
+                throw new NotSupportedException();
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return false;
+            }
+
+            public event EventHandler CanExecuteChanged;
         }
     }
 }

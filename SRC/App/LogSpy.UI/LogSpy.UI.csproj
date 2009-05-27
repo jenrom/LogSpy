@@ -104,9 +104,10 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationController.cs" />
-    <Compile Include="Commands\OpenFileLogCommand.cs" />
+    <Compile Include="Commands\OpenLogFileCommand.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IMenu.cs" />
+    <Compile Include="IMenuController.cs" />
     <Compile Include="MenuController.cs" />
     <Compile Include="MenuException.cs" />
     <Compile Include="MenuItem.cs" />

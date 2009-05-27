@@ -1,7 +1,7 @@
+using LogSpy.UI.Views;
 using NUnit.Framework;
 using Core;
 using NUnit.Framework.SyntaxHelpers;
-using LogSpy.UI;
 
 namespace LogSpy.Tests.Acceptance
 {

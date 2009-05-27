@@ -44,9 +44,15 @@ namespace LogSpy.UI
         protected virtual void SetupShell()
         {
             var controller = ObjectFactory.GetInstance<ApplicationController>();
+            ObjectFactory.Configure(x=>{
+                                            x.ForRequestedType<IMenu>().TheDefault.IsThis(controller.ShellView.Menu);
+                                            x.ForRequestedType<IMenuController>().TheDefaultIsConcreteType
+                                                <MenuController>().AsSingletons();
+                                        });
             controller.Initialize();
             var shell = controller.ShellView;
             RegionManager.SetRegionManager((DependencyObject) shell, ObjectFactory.GetInstance<IRegionManager>());
+
         }
 
         protected virtual void SetupRegionRequirements()

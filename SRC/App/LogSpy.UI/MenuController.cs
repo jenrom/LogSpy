@@ -4,9 +4,8 @@ using System.Windows.Input;
 
 namespace LogSpy.UI
 {
-    public class MenuController
+    public class MenuController: IMenuController
     {
-        private readonly IMenu menu;
         private readonly object syncObj = new object();
         private readonly ObservableCollection<MenuItem> menuItems;
 
@@ -14,14 +13,8 @@ namespace LogSpy.UI
         public MenuController(IMenu menu)
         {
             if (menu == null) throw new ArgumentNullException("menu");
-            this.menu = menu;
             menuItems = new ObservableCollection<MenuItem>();
             menu.Bind(menuItems);
-        }
-
-        public IMenu Menu
-        {
-            get { return menu; }
         }
 
         public void Register(MenuItem menuItem)

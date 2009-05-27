@@ -1,10 +1,14 @@
 using System;
+using LogSpy.UI.Views;
+using Microsoft.Practices.ServiceLocation;
+using LogSpy.UI.Commands;
 
 namespace LogSpy.UI
 {
     public class ApplicationController
     {
         private readonly IShellView shellView;
+        private IMenuController menuController;
 
         public ApplicationController(IShellView shellView)
         {
@@ -19,7 +23,14 @@ namespace LogSpy.UI
 
         public void Initialize()
         {
+            menuController = ServiceLocator.Current.GetInstance<IMenuController>();
+            SetupDefaultMenu();
             shellView.Display();
+        }
+
+        protected  virtual void SetupDefaultMenu()
+        {
+            menuController.Register(new MenuItem("Open File", MenuItemName.OpenLogFile, new OpenLogFileCommand()));
         }
     }
 }

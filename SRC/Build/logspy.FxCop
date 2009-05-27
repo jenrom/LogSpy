@@ -115,19 +115,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ShellView">
-          <Members>
-           <Member Name="#LogSourceViewContent">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-05-26 06:08:51Z">
-              <Issue>
-               <Item>'ShellView.LogSourceViewContent'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
         </Types>
        </Namespace>
        <Namespace Name="LogSpy.UI.Views">
@@ -140,6 +127,19 @@
               <Issue>
                <Item>'Menu'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShellView">
+          <Members>
+           <Member Name="#_CreateDelegate(System.Type,System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-27 06:07:31Z">
+              <Issue>
+               <Item>'ShellView._CreateDelegate(Type, string)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -163,8 +163,8 @@
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
     <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104">
     <Resolution Name="Default">Remove the read-only designation from {0} or change the field to one that is an immutable reference type. If the reference type {1} is, in fact, immutable, exclude this message.</Resolution>

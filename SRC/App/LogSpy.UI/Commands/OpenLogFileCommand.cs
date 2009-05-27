@@ -2,7 +2,7 @@ using System;
 using System.Windows.Input;
 namespace LogSpy.UI.Commands
 {
-    public class OpenFileLogCommand: ICommand
+    public class OpenLogFileCommand: ICommand
     {
         public void Execute(object parameter)
         {
