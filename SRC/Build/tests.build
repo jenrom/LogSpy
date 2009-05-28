@@ -24,6 +24,8 @@
   <fileset id="test.references">
     <include name="${bin.dir}\*.dll"></include>
     <include name="${bin.dir}\*.exe"></include>
+    <include name="PresentationFramework.dll"></include>
+    <include name="PresentationCore.dll"></include>
   </fileset>
   
   <target name="compile.tests" description="compiles all tests project into one library">
