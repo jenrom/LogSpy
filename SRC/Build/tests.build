@@ -24,8 +24,10 @@
   <fileset id="test.references">
     <include name="${bin.dir}\*.dll"></include>
     <include name="${bin.dir}\*.exe"></include>
+    <include name="WindowsBase.dll"></include>
     <include name="PresentationFramework.dll"></include>
     <include name="PresentationCore.dll"></include>
+    <include name="System.Core.dll"></include>
   </fileset>
   
   <target name="compile.tests" description="compiles all tests project into one library">
@@ -57,7 +59,7 @@
     <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
       <!--Compile tests without acceptance tests because when running under TeamCity the acceptance tests crashes-->
       <property name="run.acceptance.tests" value="false"/>
-      <call target="compile.tests"></call>
+      <!--<call target="compile.tests"></call>-->
       <echo message="Using TeamCity tests"></echo>
       <exec program="${teamcity.dotnet.nunitlauncher2.0}">
         <arg file="${test.lib}"/>
