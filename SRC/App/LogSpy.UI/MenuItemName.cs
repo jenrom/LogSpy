@@ -7,7 +7,7 @@ namespace LogSpy.UI
     /// </summary>
     public class MenuItemName
     {
-        public static readonly MenuItemName OpenLogFile = new MenuItemName("OpenLogFile");
+        public static readonly MenuItemName OpenLogFile = new MenuItemName("OpenLogFileWith");
         public static readonly MenuItemName StopListening = new MenuItemName("StopListening");
 
         private readonly string name;

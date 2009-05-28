@@ -4,6 +4,7 @@ using NUnit.Framework;
 using LogSpy.UI;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
+using LogSpy.UI.Commands;
 namespace LogSpy.Tests.Unit.UI
 {
     [TestFixture]
@@ -40,7 +41,7 @@ namespace LogSpy.Tests.Unit.UI
         [Test]
         public void the_application_controller_should_setup_the_menu_with_default_menu_items()
         {
-            menuController.Expect(x => x.Register(null))
+            menuController.Expect(x => x.RegisterFor<IOpenLogFileCommand>(null))
                 .Constraints(Is.Matching<MenuItem>(m => m.Name == MenuItemName.OpenLogFile));
             CreateSut().Initialize();
             menuController.VerifyAllExpectations();

@@ -30,7 +30,7 @@ namespace LogSpy.UI
 
         protected  virtual void SetupDefaultMenu()
         {
-            menuController.Register(new MenuItem("Open File", MenuItemName.OpenLogFile, new OpenLogFileCommand()));
+            menuController.RegisterFor<IOpenLogFileCommand>(new MenuItem("Open File", MenuItemName.OpenLogFile));
         }
     }
 }

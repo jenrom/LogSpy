@@ -7,5 +7,6 @@ namespace LogSpy.UI
         void Register(MenuItem menuItem);
         MenuItem GetMenuItemWith(MenuItemName name);
         void AttachToMenuItemWith(MenuItemName menuItemName, ICommand command);
+        void RegisterFor<TCommand>(MenuItem menuItem) where TCommand : ICommand;
     }
 }

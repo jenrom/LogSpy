@@ -104,6 +104,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationController.cs" />
+    <Compile Include="Commands\IOpenLogFileCommand.cs" />
     <Compile Include="Commands\OpenLogFileCommand.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IMenu.cs" />
@@ -112,6 +113,10 @@
     <Compile Include="MenuException.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemName.cs" />
+    <Compile Include="Views\Dialogs\DialogLauncher.cs" />
+    <Compile Include="Views\Dialogs\IDialog.cs" />
+    <Compile Include="Views\Dialogs\IDialogLauncher.cs" />
+    <Compile Include="Views\Dialogs\OpenLogFileLogDialog.cs" />
     <Compile Include="Views\IShellView.cs" />
     <Compile Include="LogSpyBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

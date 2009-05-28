@@ -1,7 +1,4 @@
-﻿using System;
-using System.Resources;
-
-namespace LogSpy.UI.Views
+﻿namespace LogSpy.UI.Views
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml

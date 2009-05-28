@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Microsoft.Practices.ServiceLocation;
 
 namespace LogSpy.UI
 {
@@ -30,6 +31,13 @@ namespace LogSpy.UI
                 menuItems.Add(menuItem);   
             }
         }
+
+        public void RegisterFor<TCommand>(MenuItem menuItem) where TCommand : ICommand
+        {
+            menuItem.Command = ServiceLocator.Current.GetInstance<TCommand>();
+            Register(menuItem);
+        }
+
 
         public MenuItem GetMenuItemWith(MenuItemName name)
         {

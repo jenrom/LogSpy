@@ -1,6 +1,6 @@
-using System;
 using System.Windows;
 using LogSpy.Core.Infrastructure;
+using LogSpy.UI.Views.Dialogs;
 using Microsoft.Practices.Composite.Presentation.Regions;
 using Microsoft.Practices.Composite.Regions;
 using StructureMap;
@@ -24,13 +24,19 @@ namespace LogSpy.UI
         protected virtual void SetupContainer()
         {
             ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
-            ObjectFactory.Configure(
-                x => x.ForRequestedType<IServiceLocator>().TheDefault.Is.Object(ServiceLocator.Current));
+            //A bug in Structure map occurs when running this in a different order and using the ForSingletonOf method
             ObjectFactory.Configure(x => x.Scan(s =>
                                                     {
                                                         s.AssemblyContainingType(GetType());
                                                         s.WithDefaultConventions();
+                                                        s.ConnectImplementationsToTypesClosing(typeof(IDialog<>));
                                                     }));
+            ObjectFactory.Configure(x =>
+            {
+                                            x.ForSingletonOf<IDialogLauncher>();
+                                            x.ForRequestedType<IServiceLocator>().TheDefault.Is.Object(
+                                                ServiceLocator.Current);
+            });
         }
 
         public void Run()
