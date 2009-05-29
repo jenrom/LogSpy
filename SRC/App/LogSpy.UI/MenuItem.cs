@@ -11,7 +11,6 @@ namespace LogSpy.UI
         public MenuItem(string displayText, MenuItemName name)
         {
             if (displayText == null) throw new ArgumentNullException("displayText");
-            if (name == null) throw new ArgumentNullException("name");
             DisplayText = displayText;
             Name = name;
             Command = new DisabledCommand();
@@ -20,7 +19,6 @@ namespace LogSpy.UI
         public MenuItem(string displayText, MenuItemName name, ICommand command)
         {
             if (displayText == null) throw new ArgumentNullException("displayText");
-            if (name == null) throw new ArgumentNullException("name");
             if (command == null) throw new ArgumentNullException("command");
             DisplayText = displayText;
             Name = name;
@@ -67,7 +65,7 @@ namespace LogSpy.UI
 
         public override int GetHashCode()
         {
-            return (Name != null ? Name.GetHashCode() : 0);
+            return Name.GetHashCode();
         }
 
         private class DisabledCommand : ICommand

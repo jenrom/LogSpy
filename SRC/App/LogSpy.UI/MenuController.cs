@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using Microsoft.Practices.ServiceLocation;
 
@@ -32,6 +33,7 @@ namespace LogSpy.UI
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "It enables an easier way to attach commands using the service locator")]
         public void RegisterFor<TCommand>(MenuItem menuItem) where TCommand : ICommand
         {
             menuItem.Command = ServiceLocator.Current.GetInstance<TCommand>();
@@ -45,7 +47,7 @@ namespace LogSpy.UI
             {
                 foreach (var menuItem in menuItems)
                 {
-                    if(menuItem.Name == name)
+                    if(menuItem.Name.Equals(name))
                     {
                         return menuItem;
                     }
