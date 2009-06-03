@@ -8,6 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Composite.Presentation.Regions.Behaviors;
 using Microsoft.Practices.Composite.Logging;
 using System.Windows.Controls;
+using LogSpy.Core.Model;
 
 namespace LogSpy.UI
 {
@@ -28,6 +29,7 @@ namespace LogSpy.UI
             ObjectFactory.Configure(x => x.Scan(s =>
                                                     {
                                                         s.AssemblyContainingType(GetType());
+                                                        s.AssemblyContainingType(typeof(ILogProvider));
                                                         s.WithDefaultConventions();
                                                         s.ConnectImplementationsToTypesClosing(typeof(IDialog<>));
                                                     }));
