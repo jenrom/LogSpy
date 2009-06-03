@@ -77,6 +77,8 @@
     </Compile>
     <Compile Include="Infrastructure\Log.cs" />
     <Compile Include="Infrastructure\Log4NetLogger.cs" />
+    <Compile Include="Model\ILogProvider.cs" />
+    <Compile Include="Model\LogFile\ILogFileProviderFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PRISM\Composite\Composite.Desktop.csproj">

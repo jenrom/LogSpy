@@ -1,5 +1,5 @@
 using System;
-using System.Windows;
+using LogSpy.Core.Model.LogFile;
 using LogSpy.UI.Views.Dialogs;
 
 namespace LogSpy.UI.Commands
@@ -7,11 +7,17 @@ namespace LogSpy.UI.Commands
     public class OpenLogFileCommand: IOpenLogFileCommand
     {
         private readonly IDialogLauncher dialogLauncher;
+        private readonly ILogFileProviderFactory fileProviderFactory;
+        private readonly IApplicationController applicationController;
 
-        public OpenLogFileCommand(IDialogLauncher dialogLauncher)
+        public OpenLogFileCommand(IDialogLauncher dialogLauncher, ILogFileProviderFactory fileProviderFactory, IApplicationController applicationController)
         {
             if (dialogLauncher == null) throw new ArgumentNullException("dialogLauncher");
+            if (fileProviderFactory == null) throw new ArgumentNullException("fileProviderFactory");
+            if (applicationController == null) throw new ArgumentNullException("applicationController");
             this.dialogLauncher = dialogLauncher;
+            this.fileProviderFactory = fileProviderFactory;
+            this.applicationController = applicationController;
         }
 
         public void Execute(object parameter)
@@ -28,7 +34,10 @@ namespace LogSpy.UI.Commands
         
         public void OpenLogFileWith(string fileName)
         {
-            MessageBox.Show(fileName);
+            if (fileName == null) throw new ArgumentNullException("fileName");
+            //TODO: Some validation is required
+            var provider = fileProviderFactory.CreateFor(fileName);
+            applicationController.Register(provider);
         }
     }
 }

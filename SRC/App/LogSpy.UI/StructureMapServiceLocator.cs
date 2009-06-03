@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
@@ -19,6 +20,21 @@ namespace LogSpy.UI
         protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
         {
             return (IEnumerable<object>) ObjectFactory.GetAllInstances(serviceType) ;
+        }
+
+    }
+
+    public static class StructureMapExtensions
+    {
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "This used for type retrieval")]
+        public static T GetInstanceWith<T>(this IServiceLocator serviceLocator, object argument)
+        {
+            if(serviceLocator is StructureMapServiceLocator)
+            {
+                return ObjectFactory.With(argument).GetInstance<T>();
+            }
+            throw new InvalidOperationException("The provided service locator is not a structure map service loator");
         }
     }
 }

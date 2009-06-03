@@ -63,6 +63,7 @@ namespace LogSpy.UI
             return Equals((MenuItem) obj);
         }
 
+
         public override int GetHashCode()
         {
             return Name.GetHashCode();
