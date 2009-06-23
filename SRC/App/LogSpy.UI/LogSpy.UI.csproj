@@ -116,10 +116,12 @@
     <Compile Include="MenuItemName.cs" />
     <Compile Include="PresentationLogic\ILogSourcePresenter.cs" />
     <Compile Include="PresentationLogic\IScreen.cs" />
+    <Compile Include="PresentationLogic\LogSourcePresenter.cs" />
     <Compile Include="Views\Dialogs\DialogLauncher.cs" />
     <Compile Include="Views\Dialogs\IDialog.cs" />
     <Compile Include="Views\Dialogs\IDialogLauncher.cs" />
     <Compile Include="Views\Dialogs\OpenLogFileLogDialog.cs" />
+    <Compile Include="Views\ILogSourceView.cs" />
     <Compile Include="Views\IShellView.cs" />
     <Compile Include="LogSpyBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
