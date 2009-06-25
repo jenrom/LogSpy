@@ -78,6 +78,10 @@
     <Compile Include="Infrastructure\Log.cs" />
     <Compile Include="Infrastructure\Log4NetLogger.cs" />
     <Compile Include="Model\ILogProvider.cs" />
+    <Compile Include="Model\IHandlerOf.cs" />
+    <Compile Include="Model\IPipeline.cs" />
+    <Compile Include="Model\IPipelineFactory.cs" />
+    <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\LogFile\ILogFileProviderFactory.cs" />
     <Compile Include="Model\LogFile\LogFileProviderFactory.cs" />
   </ItemGroup>

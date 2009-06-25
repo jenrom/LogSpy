@@ -9,6 +9,9 @@ using Microsoft.Practices.Composite.Presentation.Regions.Behaviors;
 using Microsoft.Practices.Composite.Logging;
 using System.Windows.Controls;
 using LogSpy.Core.Model;
+using LogSpy.UI.PresentationLogic;
+using System;
+using StructureMap.Interceptors;
 
 namespace LogSpy.UI
 {
@@ -29,16 +32,19 @@ namespace LogSpy.UI
             ObjectFactory.Configure(x => x.Scan(s =>
                                                     {
                                                         s.AssemblyContainingType(GetType());
-                                                        s.AssemblyContainingType(typeof(ILogProvider));
+                                                        s.AssemblyContainingType(typeof (ILogProvider));
                                                         s.WithDefaultConventions();
-                                                        s.ConnectImplementationsToTypesClosing(typeof(IDialog<>));
+                                                        s.ConnectImplementationsToTypesClosing(typeof (IDialog<>));
                                                     }));
             ObjectFactory.Configure(x =>
-            {
+                                        {
                                             x.ForSingletonOf<IDialogLauncher>();
+                                            x.ForSingletonOf<IPipelineFactory>();
                                             x.ForRequestedType<IServiceLocator>().TheDefault.Is.Object(
                                                 ServiceLocator.Current);
-            });
+                                            //Need to find out how to intercept the construction so a region will be requested from the regionManager
+                                            //x.ForRequestedType<ILogSourcePresenter>().TheDefault.Is.ConstructedBy())
+                                        });
         }
 
         public void Run()
@@ -52,7 +58,8 @@ namespace LogSpy.UI
         protected virtual void SetupShell()
         {
             var controller = ObjectFactory.GetInstance<ApplicationController>();
-            ObjectFactory.Configure(x=>{
+            ObjectFactory.Configure(x =>
+                                        {
                                             x.ForRequestedType<IMenu>().TheDefault.IsThis(controller.ShellView.Menu);
                                             x.ForRequestedType<IMenuController>().TheDefaultIsConcreteType
                                                 <MenuController>().AsSingletons();
@@ -60,7 +67,6 @@ namespace LogSpy.UI
             controller.Initialize();
             var shell = controller.ShellView;
             RegionManager.SetRegionManager((DependencyObject) shell, ObjectFactory.GetInstance<IRegionManager>());
-
         }
 
         protected virtual void SetupRegionRequirements()
@@ -78,7 +84,7 @@ namespace LogSpy.UI
             var adapterMappings = ObjectFactory.GetInstance<RegionAdapterMappings>();
             adapterMappings.RegisterMapping(typeof (ContentControl),
                                             ObjectFactory.GetInstance<ContentControlRegionAdapter>());
-            adapterMappings.RegisterMapping(typeof(ItemsControl),
+            adapterMappings.RegisterMapping(typeof (ItemsControl),
                                             ObjectFactory.GetInstance<ItemsControlRegionAdapter>());
             var regionBehaviorFactory = ObjectFactory.GetInstance<IRegionBehaviorFactory>();
             regionBehaviorFactory.AddIfMissing(AutoPopulateRegionBehavior.BehaviorKey,
