@@ -7,7 +7,7 @@ namespace LogSpy.UI
 {
     public static class Extensions
     {
-        public static void For<T>(this PropertyChangedEventHandler handler, T sender, Expression<Func<T,object>> propertyNameSelector)
+        public static void For<T>(this PropertyChangedEventHandler handler, T sender, Expression<Func<T, object>> propertyNameSelector) where T : INotifyPropertyChanged
         {
             if(handler != null)
             {
