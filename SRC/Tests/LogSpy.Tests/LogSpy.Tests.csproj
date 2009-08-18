@@ -89,6 +89,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Core\Infrastructure\Log4netLoggerTests.cs" />
     <Compile Include="Unit\Core\Infrastructure\LogTests.cs" />
+    <Compile Include="Spikes\FileOperationTests.cs" />
+    <Compile Include="Unit\Core\Model\LogFileProviderFactoryTests.cs" />
+    <Compile Include="Spikes\SystemFileWatcherTests.cs" />
     <Compile Include="Unit\UI\LogSourcePresenterTests.cs" />
     <Compile Include="Unit\UI\When_initializing_the_application_controller.cs" />
     <Compile Include="Unit\UI\MenuControllerTests.cs" />
