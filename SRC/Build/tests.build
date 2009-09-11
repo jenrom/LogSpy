@@ -22,17 +22,12 @@
    
 
   <fileset id="test.references">
-    <!--<include name="${libs.dir}\NUnit\nunit.framework.dll" />
-    <include name="${libs.dir}\RhinoMocks\Rhino.Mocks.dll" />
-    <include name="${libs.dir}\log4net\log4net.dll"/>
-    <include name="${libs.dir}\white\White.NUnit.dll"/>
-    <include name="${libs.dir}\white\core.dll"/>
-    <include name="${bin.dir}\LogSpy.core"/>
-    <include name="${bin.dir}\LogSpy.exe"/>
-    <include name="${bin.dir}\Microsoft.Practices.Composite.dll"/>
-    <include name="${bin.dir}\Microsoft.Practices.ServiceLocation.dll"></include>-->
     <include name="${bin.dir}\*.dll"></include>
     <include name="${bin.dir}\*.exe"></include>
+    <include name="WindowsBase.dll"></include>
+    <include name="PresentationFramework.dll"></include>
+    <include name="PresentationCore.dll"></include>
+    <include name="System.Core.dll"></include>
   </fileset>
   
   <target name="compile.tests" description="compiles all tests project into one library">
@@ -62,13 +57,13 @@
   
   <target name="run.tc.tests">
     <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
+      <!--Compile tests without acceptance tests because when running under TeamCity the acceptance tests crashes-->
+      <property name="run.acceptance.tests" value="false"/>
+      <!--<call target="compile.tests"></call>-->
       <echo message="Using TeamCity tests"></echo>
       <exec program="${teamcity.dotnet.nunitlauncher2.0}">
         <arg file="${test.lib}"/>
       </exec>
-      <!--Compile tests without acceptance tests for the ncover analysis because when running under TeamCity the acceptance tests crashes-->
-      <property name="run.acceptance.tests" value="false"/>
-      <call target="compile.tests"></call>
     </if>
   </target>
 

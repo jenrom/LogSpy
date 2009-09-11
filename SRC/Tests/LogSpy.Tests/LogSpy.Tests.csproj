@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\Log4Net\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\PRISM\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.3.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\NUnit\nunit.framework.dll</HintPath>
@@ -54,6 +58,10 @@
     <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\RhinoMocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -77,10 +85,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceptance\BaseTests.cs" />
+    <Compile Include="GenericConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Core\Infrastructure\Log4netLoggerTests.cs" />
     <Compile Include="Unit\Core\Infrastructure\LogTests.cs" />
-    <Compile Include="Unit\UI\ApplicationControllerTest.cs" />
+    <Compile Include="Spikes\FileOperationTests.cs" />
+    <Compile Include="Unit\Core\Model\LogFileProviderFactoryTests.cs" />
+    <Compile Include="Spikes\SystemFileWatcherTests.cs" />
+    <Compile Include="Unit\UI\LogSourcePresenterTests.cs" />
+    <Compile Include="Unit\UI\When_initializing_the_application_controller.cs" />
+    <Compile Include="Unit\UI\MenuControllerTests.cs" />
+    <Compile Include="Unit\UI\MenuItemTests.cs" />
+    <Compile Include="Unit\UI\OpenLogFileCommandTests.cs" />
+    <Compile Include="Unit\UI\StructureMapServiceLocatorTests.cs" />
+    <Compile Include="Unit\UI\When_registering_a_new_provider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\App\LogSpy.Core\LogSpy.Core.csproj">

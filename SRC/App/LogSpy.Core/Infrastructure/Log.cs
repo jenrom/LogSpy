@@ -66,16 +66,7 @@ namespace LogSpy.Core.Infrastructure
         public static void Error(object message)
         {
             if (message == null) throw new ArgumentNullException("message");
-            var exception = message as Exception;
-            if(exception != null)
-            {
-                logger.Log(exception.ToString(), Category.Exception, Priority.None);
-            }
-            else
-            {
                 logger.Log(message.ToString(), Category.Exception, Priority.None);    
-            }
-            
         }
     }
 }

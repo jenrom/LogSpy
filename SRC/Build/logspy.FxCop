@@ -40,6 +40,26 @@
   <Settings />
  </Rules>
  <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="LogSpy.Core.Infrastructure">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-07-17 05:41:04Z">
+      <Issue>
+       <Item>LogSpy.Core.Infrastructure</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="LogSpy.Core.Model.LogFile">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-07-17 05:41:04Z">
+      <Issue>
+       <Item>LogSpy.Core.Model.LogFile</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/../bin/LogSpy.Core.dll">
     <Modules>
@@ -51,6 +71,66 @@
         </Issue>
        </Message>
       </Messages>
+      <Namespaces>
+       <Namespace Name="LogSpy.Core.Infrastructure">
+        <Types>
+         <Type Name="Log">
+          <Members>
+           <Member Name="#AsInfo(System.Object)">
+            <Messages>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-07-17 05:41:04Z">
+              <Issue Name="TooGeneric">
+               <Item>'Log.AsInfo(object)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Log4NetLogger">
+          <Members>
+           <Member Name="#Invariant()">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-17 05:41:04Z">
+              <Issue>
+               <Item>'Log4NetLogger.Invariant()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-17 05:41:04Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'Log4NetLogger.Invariant()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="LogSpy.Core.Model">
+        <Types>
+         <Type Name="IHandlerOf`1">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2009-07-17 05:41:04Z">
+            <Issue>
+             <Item>'IHandlerOf&lt;T&gt;'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ILogProvider">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2009-07-17 05:41:04Z">
+            <Issue>
+             <Item>'ILogProvider'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
      </Module>
     </Modules>
    </Target>
@@ -69,18 +149,80 @@
         </Notes>
        </Message>
       </Messages>
+      <Namespaces>
+       <Namespace Name="LogSpy.UI">
+        <Types>
+         <Type Name="Extensions">
+          <Members>
+           <Member Name="#For`1(System.ComponentModel.PropertyChangedEventHandler,!!0,System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,System.Object&gt;&gt;)">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2009-05-26 06:08:51Z">
+              <Issue>
+               <Item>'Extensions.For&lt;T&gt;(this PropertyChangedEventHandler, T, Expression&lt;Func&lt;T, object&gt;&gt;)'</Item>
+               <Item>'Expression&lt;Func&lt;T, object&gt;&gt;'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Administrator">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LogSpyBootstrapper">
+          <Members>
+           <Member Name="#SetupShell()">
+            <Messages>
+             <Message Id="ex" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2009-07-17 05:41:04Z">
+              <Issue>
+               <Item>'LogSpyBootstrapper.SetupShell()'</Item>
+               <Item>'ex'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Notes>
    <User Name="Administrator">
+    <Note Id="0" Modified="2009-05-26 06:11:45Z">An expressioin is an exception for that</Note>
     <Note Id="2" Modified="2009-05-08 05:49:54Z">We don't care at least now for the strongly assemblies</Note>
    </User>
   </Notes>
   <Rules>
    <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
     <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
+    <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

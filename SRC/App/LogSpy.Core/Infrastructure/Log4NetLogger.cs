@@ -2,13 +2,14 @@ using System;
 using log4net;
 using log4net.Config;
 using Microsoft.Practices.Composite.Logging;
+using System.Diagnostics.Contracts;
 
 namespace LogSpy.Core.Infrastructure
 {
     /// <summary>
     /// Represents a log4net logger adapter that can be used by Prism
     /// </summary>
-    public class Log4NetLogger : ILoggerFacade
+    public sealed class Log4NetLogger : ILoggerFacade
     {
         private readonly ILog destinationLog;
 
@@ -44,6 +45,7 @@ namespace LogSpy.Core.Infrastructure
         /// <param name="priority">The priority of the entry.</param>
         public void Log(string message, Category category, Priority priority)
         {
+            Contract.Requires(string.IsNullOrEmpty(message) == false);
             switch(category)
             {
                 case Category.Debug:
@@ -63,5 +65,12 @@ namespace LogSpy.Core.Infrastructure
                     break;
             }
         }
+        
+        [ContractInvariantMethod]
+        private void Invariant()
+        {
+            Contract.Invariant(destinationLog != null);
+        }
+
     }
 }
