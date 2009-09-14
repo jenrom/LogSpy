@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Microsoft.Practices.ServiceLocation;
+using LogSpy.Core.Infrastructure;
 
 namespace LogSpy.UI
 {
@@ -13,6 +13,7 @@ namespace LogSpy.UI
             base.OnStartup(e);
             var bootstrapper = new LogSpyBootstrapper();
             bootstrapper.Run();
+            Log.AsDebug("The application was initialized");
         }
     }
 }
