@@ -2,9 +2,9 @@ using System;
 
 namespace LogSpy.Core.Model.LogFile
 {
-    public class LogFileProviderFactory: ILogFileProviderFactory
+    public class LogFileProviderFactory: ILogProviderFactory<LogFileProviderCreationContext>
     {
-        public ILogProvider CreateFor(string fileName)
+        public ILogProvider CreateFor(LogFileProviderCreationContext fileName)
         {
             throw new NotImplementedException();
         }

@@ -35,6 +35,7 @@ namespace LogSpy.UI
                                                         s.AssemblyContainingType(typeof (ILogProvider));
                                                         s.WithDefaultConventions();
                                                         s.ConnectImplementationsToTypesClosing(typeof (IDialog<>));
+                                                        s.ConnectImplementationsToTypesClosing(typeof(ILogProviderFactory<>));
                                                     }));
             ObjectFactory.Configure(x =>
                                         {

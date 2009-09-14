@@ -83,9 +83,11 @@
     <Compile Include="Model\IPipeline.cs" />
     <Compile Include="Model\IPipelineFactory.cs" />
     <Compile Include="Model\LogEntry.cs" />
-    <Compile Include="Model\LogFile\ILogFileProviderFactory.cs" />
+    <Compile Include="Model\ILogProviderFactory.cs" />
+    <Compile Include="Model\LogFile\LogFileProviderCreationContext.cs" />
     <Compile Include="Model\LogFile\SingleLogFileProvider.cs" />
     <Compile Include="Model\LogFile\LogFileProviderFactory.cs" />
+    <Compile Include="Model\ProviderCreationContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PRISM\Composite\Composite.Desktop.csproj">

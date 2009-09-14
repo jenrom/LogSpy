@@ -1,16 +1,25 @@
 using System;
+using System.Windows.Input;
+using LogSpy.Core.Model;
 using LogSpy.Core.Model.LogFile;
 using LogSpy.UI.Views.Dialogs;
 
 namespace LogSpy.UI.Commands
 {
+    public interface IOpenLogFileCommand : ICommand
+    {
+        void OpenLogFileWith(string fileName);
+    }
+
     public class OpenLogFileCommand: IOpenLogFileCommand
     {
         private readonly IDialogLauncher dialogLauncher;
-        private readonly ILogFileProviderFactory fileProviderFactory;
+        private readonly ILogProviderFactory<LogFileProviderCreationContext> fileProviderFactory;
         private readonly IApplicationController applicationController;
 
-        public OpenLogFileCommand(IDialogLauncher dialogLauncher, ILogFileProviderFactory fileProviderFactory, IApplicationController applicationController)
+        public OpenLogFileCommand(IDialogLauncher dialogLauncher, 
+            ILogProviderFactory<LogFileProviderCreationContext> fileProviderFactory, 
+            IApplicationController applicationController)
         {
             if (dialogLauncher == null) throw new ArgumentNullException("dialogLauncher");
             if (fileProviderFactory == null) throw new ArgumentNullException("fileProviderFactory");
@@ -35,8 +44,8 @@ namespace LogSpy.UI.Commands
         public void OpenLogFileWith(string fileName)
         {
             if (fileName == null) throw new ArgumentNullException("fileName");
-            //TODO: Some validation is required
-            var provider = fileProviderFactory.CreateFor(fileName);
+            var context = new LogFileProviderCreationContext(fileName);
+            var provider = fileProviderFactory.CreateFor(context);
             applicationController.Register(provider);
         }
     }

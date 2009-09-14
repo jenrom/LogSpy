@@ -104,8 +104,8 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationController.cs" />
-    <Compile Include="Commands\IOpenLogFileCommand.cs" />
     <Compile Include="Commands\OpenLogFileCommand.cs" />
+    <Compile Include="Commands\DisplayMessageCommand.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IApplicationController.cs" />
     <Compile Include="IMenu.cs" />
