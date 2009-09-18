@@ -118,6 +118,7 @@
     <Compile Include="PresentationLogic\IScreen.cs" />
     <Compile Include="PresentationLogic\LogSourcePresenter.cs" />
     <Compile Include="Views\Dialogs\DialogLauncher.cs" />
+    <Compile Include="Views\Dialogs\DisplayMessageDialog.cs" />
     <Compile Include="Views\Dialogs\IDialog.cs" />
     <Compile Include="Views\Dialogs\IDialogLauncher.cs" />
     <Compile Include="Views\Dialogs\OpenLogFileLogDialog.cs" />
@@ -178,6 +179,10 @@
     <ProjectReference Include="..\PRISM\Composite\Composite.Desktop.csproj">
       <Project>{77138947-1D13-4E22-AEE0-5D0DD046CA34}</Project>
       <Name>Composite.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{C13DB73F-83C9-48EF-89EA-63D7C1610B8A}</Project>
+      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

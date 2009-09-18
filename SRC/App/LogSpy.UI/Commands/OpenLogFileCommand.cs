@@ -46,7 +46,14 @@ namespace LogSpy.UI.Commands
             if (fileName == null) throw new ArgumentNullException("fileName");
             var context = new LogFileProviderCreationContext(fileName);
             var provider = fileProviderFactory.CreateFor(context);
-            applicationController.Register(provider);
+            if(false == context.WasCreated)
+            {
+                dialogLauncher.LaunchFor(new DisplayMessageCommand(context.CreationErrors));
+            }
+            else
+            {
+                applicationController.Register(provider);   
+            }
         }
     }
 }

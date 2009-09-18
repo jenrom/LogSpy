@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using LogSpy.UI.Views.Dialogs;
 using LogSpy.Core.Model;
+
 namespace LogSpy.Tests.Unit.UI
 {
     [TestFixture]
@@ -15,6 +16,7 @@ namespace LogSpy.Tests.Unit.UI
         private ILogProvider createdProvider;
         private IApplicationController applicationController;
         private LogFileProviderCreationContext context;
+        private string errorMessage = "error";
 
         [SetUp]
         public void before_each()
@@ -44,7 +46,8 @@ namespace LogSpy.Tests.Unit.UI
         [Test]
         public void should_not_register_the_provider_because_the_factory_was_not_able_to_create_a_provider()
         {
-            providerFactory.Stub(x => x.CreateFor(context)).Return(null).WhenCalled(x=>context.WasCreated = false);
+            providerFactory.Stub(x => x.CreateFor(context)).Return(null)
+                .WhenCalled(x=>context.AddError(errorMessage));
         }
 
         [Test]
@@ -54,6 +57,24 @@ namespace LogSpy.Tests.Unit.UI
             applicationController.Expect(x => x.Register(createdProvider));
             CreateSut().OpenLogFileWith(context.FileName);
             applicationController.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void when_a_creation_error_occurs_should_display_an_error_dialog_()
+        {
+            providerFactory.Stub(x => x.CreateFor(context)).Return(null)
+                .WhenCalled(x => ((ProviderCreationContext)x.Arguments[0]).AddError(errorMessage));
+            CreateSut().OpenLogFileWith(context.FileName);
+            dialogLauncher.AssertWasCalled(x=>x.LaunchFor<DisplayMessageCommand>(null), x=>x.IgnoreArguments());
+        }
+
+        [Test]
+        public void when_a_creation_error_occurs_should_not_register_a_provider()
+        {
+            providerFactory.Stub(x => x.CreateFor(context)).Return(null)
+                .WhenCalled(x => ((ProviderCreationContext)x.Arguments[0]).AddError(errorMessage));
+            CreateSut().OpenLogFileWith(context.FileName);
+            applicationController.AssertWasNotCalled(x=>x.Register(null), x=>x.IgnoreArguments());
         }
     }
 }

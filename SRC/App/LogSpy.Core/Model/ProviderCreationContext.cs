@@ -17,7 +17,10 @@ namespace LogSpy.Core.Model
             creationErrors.Add(errorMessage);
         }
 
-        public bool WasCreated { get; set; }
+        public bool WasCreated { get
+        {
+            return creationErrors.Count == 0;
+        }}
 
         public IEnumerable<string> CreationErrors
         {

@@ -1,6 +1,7 @@
 using System;
-using System.Windows;
+using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 namespace LogSpy.UI.Commands
 {
@@ -14,10 +15,15 @@ namespace LogSpy.UI.Commands
         private readonly string message;
         private readonly string messageSeperator = Environment.NewLine;
 
-        public DisplayMessageCommand(params string[] message)
+        public DisplayMessageCommand(IEnumerable<string> messages):this(messages.ToArray())
         {
-            if (message == null) throw new ArgumentNullException("message");
-            this.message = FormatMessage(message);
+            
+        }
+
+        public DisplayMessageCommand(params string[] messages)
+        {
+            if (messages == null) throw new ArgumentNullException("messages");
+            message = FormatMessage(messages);
         }
 
         private string FormatMessage(string[] messages)

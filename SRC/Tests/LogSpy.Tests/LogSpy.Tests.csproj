@@ -87,6 +87,7 @@
     <Compile Include="Acceptance\BaseTests.cs" />
     <Compile Include="GenericConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spikes\DialogTests.cs" />
     <Compile Include="Unit\Core\Infrastructure\Log4netLoggerTests.cs" />
     <Compile Include="Unit\Core\Infrastructure\LogTests.cs" />
     <Compile Include="Spikes\FileOperationTests.cs" />
