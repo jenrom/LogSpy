@@ -56,24 +56,25 @@
   </target>
   
   <target name="run.tc.tests">
-    <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
-      <!--Compile tests without acceptance tests because when running under TeamCity the acceptance tests crashes-->
-      <property name="run.acceptance.tests" value="false"/>
-      <!--<call target="compile.tests"></call>-->
-      <echo message="Using TeamCity tests"></echo>
-      <exec program="${teamcity.dotnet.nunitlauncher2.0}">
-        <arg file="${test.lib}"/>
-      </exec>
-    </if>
+    <echo message="Using TeamCity tests"></echo>
+    <exec program="${teamcity.dotnet.nunitlauncher2.0}">
+      <arg file="${test.lib}"/>
+    </exec>
   </target>
 
   <target name="run.tests.with.coverage" depends="move.assets setup.tests" >
-    <call target="run.tc.tests"></call>
-    <if test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
-      <echo message="Using TeamCity nunit"></echo>
-      <property name="nunit.console" value="${teamcity.dotnet.nunitlauncher2.0}" />
-      <property name="nUnit.console.args" value="${test.lib}"></property>
-    </if>
+    <!--Coverage is integrated into teamcity-->
+    <choose>
+      <when test="${property::exists('teamcity.dotnet.nunitlauncher2.0')}">
+        <call target="run.tc.tests"></call>  
+      </when>
+      <otherwise>
+        <call target="nunit.with.coverage"></call>  
+      </otherwise>
+    </choose>
+  </target>
+
+  <target name="nunit.with.coverage">
     <loadtasks assembly="${nCover.dir}\NCoverExplorer.NAntTasks.dll"></loadtasks>
     <property name="test.failed" value="false"/>
     <property name="fail.message" value=""/>
