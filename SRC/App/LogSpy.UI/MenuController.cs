@@ -26,8 +26,7 @@ namespace LogSpy.UI
             {
                 if(menuItems.Contains(menuItem))
                 {
-                    throw new MenuException(string.Format("The menu allready contains a menu item with name {0}",
-                                                          menuItem.Name));
+                    throw new MenuException(string.Format(Resources.Exceptions.DuplicateMenuItem,menuItem.Name));
                 }
                 menuItems.Add(menuItem);   
             }
@@ -53,7 +52,7 @@ namespace LogSpy.UI
                     }
                 }
             }
-            throw new MenuException(string.Format("Could not find a registerd menu item with with name {0}", name));
+            throw new MenuException(string.Format(Resources.Exceptions.MenuItemDoesNotExists, name));
         }
 
         public void AttachToMenuItemWith(MenuItemName menuItemName, ICommand command)

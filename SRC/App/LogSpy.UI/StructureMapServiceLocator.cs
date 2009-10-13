@@ -34,7 +34,7 @@ namespace LogSpy.UI
             {
                 return ObjectFactory.With(argument).GetInstance<T>();
             }
-            throw new InvalidOperationException("The provided service locator is not a structure map service loator");
+            throw new InvalidOperationException(Resources.Exceptions.IncompatibleServiceLocator);
         }
     }
 }
