@@ -4,13 +4,13 @@ using Microsoft.Win32;
 
 namespace LogSpy.UI.Views.Dialogs
 {
-    public class OpenLogFileLogDialog : IDialog<IOpenLogFileCommand>
+    public class OpenLogFileLogDialog : IDialog<OpenLogFileCommand>
     {
-        private readonly IOpenLogFileCommand command;
+        private readonly OpenLogFileCommand command;
         private readonly OpenFileDialog openFileDialog;
         private static string logFilesPatterns;
 
-        public OpenLogFileLogDialog(IOpenLogFileCommand command)
+        public OpenLogFileLogDialog(OpenLogFileCommand command)
         {
             this.command = command;
             logFilesPatterns = "Log files (*.log)|*.log|Text files (*.txt)|*.txt|Xml files (*.xml)|*.xml|All files (*.*)|*.*";
@@ -44,7 +44,7 @@ namespace LogSpy.UI.Views.Dialogs
         }
 
 
-        public IOpenLogFileCommand DialogHandler
+        public OpenLogFileCommand DialogHandler
         {
             get { return command; }
         }

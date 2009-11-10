@@ -43,7 +43,7 @@ namespace LogSpy.Tests.Unit.UI
         [Test]
         public void should_setup_the_menu_with_default_menu_items()
         {
-            menuController.Expect(x => x.RegisterFor<IOpenLogFileCommand>(null))
+            menuController.Expect(x => x.RegisterFor<OpenLogFileCommand>(null))
                 .Constraints(Is.Matching<MenuItem>(m => m.Name.Equals( MenuItemName.OpenLogFile)));
             Sut().Initialize();
             menuController.VerifyAllExpectations();

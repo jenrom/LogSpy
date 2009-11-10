@@ -2,9 +2,9 @@ using System.Windows;
 using LogSpy.UI.Commands;
 namespace LogSpy.UI.Views.Dialogs
 {
-    public class DisplayMessageDialog : IDialog<IDisplayMessageCommand>
+    public class DisplayMessageDialog : IDialog<DisplayMessageCommand>
     {
-        public DisplayMessageDialog(IDisplayMessageCommand dialogHandler)
+        public DisplayMessageDialog(DisplayMessageCommand dialogHandler)
         {
             DialogHandler = dialogHandler;
             Title = Resources.Dialogs.ErrorDialogTitle;
@@ -20,7 +20,7 @@ namespace LogSpy.UI.Views.Dialogs
             MessageBox.Show(DialogHandler.Message, Title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        public IDisplayMessageCommand DialogHandler
+        public DisplayMessageCommand DialogHandler
         {
             get; private set;
         }

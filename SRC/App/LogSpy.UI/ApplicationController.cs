@@ -36,7 +36,7 @@ namespace LogSpy.UI
 
         protected virtual void SetupDefaultMenu()
         {
-            menuController.RegisterFor<IOpenLogFileCommand>(new MenuItem(Resources.Menu.OpenLogFileItem, MenuItemName.OpenLogFile));
+            menuController.RegisterFor<OpenLogFileCommand>(new MenuItem(Resources.Menu.OpenLogFileItem, MenuItemName.OpenLogFile));
         }
 
         public void Register(ILogProvider logProvider)

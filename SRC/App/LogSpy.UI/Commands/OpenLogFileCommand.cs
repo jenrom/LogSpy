@@ -1,17 +1,13 @@
 using System;
-using System.Windows.Input;
 using LogSpy.Core.Model;
 using LogSpy.Core.Model.LogFile;
 using LogSpy.UI.Views.Dialogs;
+using System.Windows.Input;
+using StructureMap;
 
 namespace LogSpy.UI.Commands
 {
-    public interface IOpenLogFileCommand : ICommand
-    {
-        void OpenLogFileWith(string fileName);
-    }
-
-    public class OpenLogFileCommand: IOpenLogFileCommand
+    public class OpenLogFileCommand: ICommand
     {
         private readonly IDialogLauncher dialogLauncher;
         private readonly ILogProviderFactory<LogFileProviderCreationContext> fileProviderFactory;
@@ -31,7 +27,7 @@ namespace LogSpy.UI.Commands
 
         public void Execute(object parameter)
         {
-            dialogLauncher.LaunchFor<IOpenLogFileCommand>(this);
+            dialogLauncher.LaunchFor(this);
         }
 
         public bool CanExecute(object parameter)
@@ -48,7 +44,10 @@ namespace LogSpy.UI.Commands
             var provider = fileProviderFactory.CreateFor(context);
             if(false == context.WasCreated)
             {
-                dialogLauncher.LaunchFor(new DisplayMessageCommand(context.CreationErrors));
+                
+                var command = new DisplayMessageCommand(context.CreationErrors);
+                var instance = ObjectFactory.With(command).GetInstance<IDialog<DisplayMessageCommand>>();
+                dialogLauncher.LaunchFor(command);
             }
             else
             {

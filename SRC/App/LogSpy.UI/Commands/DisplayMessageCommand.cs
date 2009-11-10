@@ -5,12 +5,7 @@ using System.Collections.Generic;
 
 namespace LogSpy.UI.Commands
 {
-    public interface IDisplayMessageCommand
-    {
-        string Message { get; }
-    }
-
-    public class DisplayMessageCommand: IDisplayMessageCommand
+    public class DisplayMessageCommand
     {
         private readonly string message;
         private readonly string messageSeperator = Environment.NewLine;

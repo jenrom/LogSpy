@@ -38,7 +38,7 @@ namespace LogSpy.Tests.Unit.UI
         public void should_launch_a_open_log_file_dialog_when_executing_the_command()
         {
             var sut = CreateSut();
-            dialogLauncher.Expect(x => x.LaunchFor<IOpenLogFileCommand>(sut));
+            dialogLauncher.Expect(x => x.LaunchFor(sut));
             sut.Execute(null);
             dialogLauncher.VerifyAllExpectations();
         }
