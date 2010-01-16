@@ -44,7 +44,6 @@ namespace LogSpy.UI
                                             x.ForRequestedType<IServiceLocator>().TheDefault.Is.Object(
                                                 ServiceLocator.Current);
                                             //Need to find out how to intercept the construction so a region will be requested from the regionManager
-                                            //x.ForRequestedType<ILogSourcePresenter>().TheDefault.Is.ConstructedBy())
                                         });
         }
 

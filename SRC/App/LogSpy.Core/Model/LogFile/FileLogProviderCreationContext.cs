@@ -1,16 +1,16 @@
 namespace LogSpy.Core.Model.LogFile
 {
-    public class LogFileProviderCreationContext: ProviderCreationContext
+    public class FileLogProviderCreationContext: ProviderCreationContext
     {
         
-        public LogFileProviderCreationContext(string fileName)
+        public FileLogProviderCreationContext(string fileName)
         {
             FileName = fileName;
         }
 
         public string FileName{ get; private set; }
 
-        public bool Equals(LogFileProviderCreationContext other)
+        public bool Equals(FileLogProviderCreationContext other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -21,8 +21,8 @@ namespace LogSpy.Core.Model.LogFile
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (LogFileProviderCreationContext)) return false;
-            return Equals((LogFileProviderCreationContext) obj);
+            if (obj.GetType() != typeof (FileLogProviderCreationContext)) return false;
+            return Equals((FileLogProviderCreationContext) obj);
         }
 
         public override int GetHashCode()

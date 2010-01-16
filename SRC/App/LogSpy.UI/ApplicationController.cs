@@ -54,7 +54,7 @@ namespace LogSpy.UI
 
         private ILogSourcePresenter CreateLogSourcePresenter(ILogProvider logProvider)
         {
-            return serviceLocator.GetInstanceWith<ILogSourcePresenter>(logProvider);
+            return serviceLocator.GetInstanceWith<ILogSourcePresenter, ILogProvider>(logProvider);
         }
 
         private void Activate(ILogSourcePresenter logSourceScreen)

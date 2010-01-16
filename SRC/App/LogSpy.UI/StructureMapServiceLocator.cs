@@ -28,11 +28,11 @@ namespace LogSpy.UI
     {
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "This used for type retrieval")]
-        public static T GetInstanceWith<T>(this IServiceLocator serviceLocator, object argument)
+        public static T GetInstanceWith<T, TArgument>(this IServiceLocator serviceLocator, TArgument argument)
         {
             if(serviceLocator is StructureMapServiceLocator)
             {
-                return ObjectFactory.With(argument).GetInstance<T>();
+                return ObjectFactory.With<TArgument>(argument).GetInstance<T>();
             }
             throw new InvalidOperationException(Resources.Exceptions.IncompatibleServiceLocator);
         }

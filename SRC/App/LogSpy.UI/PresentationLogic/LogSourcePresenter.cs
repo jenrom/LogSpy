@@ -9,39 +9,22 @@ namespace LogSpy.UI.PresentationLogic
     {
         private readonly ILogProvider logProvider;
         private readonly ILogSourceView logSourceView;
-        private readonly IPipelineFactory pipelineFactory;
-        private IPipeline currentlyUsedPipeline;
         private IRegion region;
 
-        public LogSourcePresenter(ILogProvider logProvider, ILogSourceView logSourceView, IPipelineFactory pipelineFactory, IRegion region)
+        public LogSourcePresenter(ILogProvider logProvider, ILogSourceView logSourceView, IRegionManager regionManager)
         {
             if (logProvider == null) throw new ArgumentNullException("logProvider");
             if (logSourceView == null) throw new ArgumentNullException("logSourceView");
-            if (pipelineFactory == null) throw new ArgumentNullException("pipelineFactory");
-            if (region == null) throw new ArgumentNullException("region");
-            this.region = region;
+            if (regionManager == null) throw new ArgumentNullException("region");
             this.logProvider = logProvider;
             this.logSourceView = logSourceView;
-            this.pipelineFactory = pipelineFactory;
-            InitializeView();
-            InitializePipeline();   
-        }
-
-        private void InitializeView()
-        {
+            region = regionManager.GetLogSourceViewRegion();
             region.Add(logSourceView);
-        }
-
-        private void InitializePipeline()
-        {
-            currentlyUsedPipeline = pipelineFactory.CreateWithDefaultSettingsUsing(logProvider);
-            currentlyUsedPipeline.SubscribeAs<IHandlerOf<LogEntry>>(this);
         }
 
         public void Activate()
         {
             region.Activate(logSourceView);
-            currentlyUsedPipeline.Start();
         }
 
         public void Close()

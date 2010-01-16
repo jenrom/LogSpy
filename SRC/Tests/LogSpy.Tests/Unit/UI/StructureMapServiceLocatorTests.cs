@@ -18,12 +18,21 @@ namespace LogSpy.Tests.Unit.UI
         }
 
         [Test]
-        public void shold_retrieve_the_tested_component_with_specified_argument()
+        public void shold_retrieve_an_instance_with_specified_argument()
         {
             ServiceLocator.SetLocatorProvider(()=>new StructureMapServiceLocator());
             var argument = "test argument";
-            var tester = ServiceLocator.Current.GetInstanceWith<ServiceLocatorTester>(argument);
+            var tester = ServiceLocator.Current.GetInstanceWith<ServiceLocatorTester, object>(argument);
             Assert.That(tester.RequiredArgument, Is.EqualTo(argument));
+        }
+
+        [Test]
+        public void should_retrieve_an_instance_with_a_newly_created_instance_because_the_types_are_not_matching()
+        {
+            ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
+            var argument = "test argument";
+            var tester = ServiceLocator.Current.GetInstanceWith<ServiceLocatorTester, string>(argument);
+            Assert.That(tester.RequiredArgument, Is.Not.EqualTo(argument));
         }
 
         [Test]
@@ -31,7 +40,7 @@ namespace LogSpy.Tests.Unit.UI
         public void should_not_allow_to_use_the_structure_map_extensions_in_case_if_the_underlying_service_locator_is_not_based_on_structure_map()
         {
             ServiceLocator.SetLocatorProvider(() => null);
-            ServiceLocator.Current.GetInstanceWith<ServiceLocatorTester>(null);
+            ServiceLocator.Current.GetInstanceWith<ServiceLocatorTester, string>(null);
         }
 
         public class ServiceLocatorTester

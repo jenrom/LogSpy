@@ -4,17 +4,18 @@ using LogSpy.Core.Model.LogFile;
 using LogSpy.UI.Views.Dialogs;
 using System.Windows.Input;
 using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 
 namespace LogSpy.UI.Commands
 {
     public class OpenLogFileCommand: ICommand
     {
         private readonly IDialogLauncher dialogLauncher;
-        private readonly ILogProviderFactory<LogFileProviderCreationContext> fileProviderFactory;
+        private readonly ILogProviderFactory<FileLogProviderCreationContext> fileProviderFactory;
         private readonly IApplicationController applicationController;
 
         public OpenLogFileCommand(IDialogLauncher dialogLauncher, 
-            ILogProviderFactory<LogFileProviderCreationContext> fileProviderFactory, 
+            ILogProviderFactory<FileLogProviderCreationContext> fileProviderFactory, 
             IApplicationController applicationController)
         {
             if (dialogLauncher == null) throw new ArgumentNullException("dialogLauncher");
@@ -40,18 +41,16 @@ namespace LogSpy.UI.Commands
         public void OpenLogFileWith(string fileName)
         {
             if (fileName == null) throw new ArgumentNullException("fileName");
-            var context = new LogFileProviderCreationContext(fileName);
+            var context = new FileLogProviderCreationContext(fileName);
             var provider = fileProviderFactory.CreateFor(context);
-            if(false == context.WasCreated)
+            if(context.WasCreated)
             {
-                
-                var command = new DisplayMessageCommand(context.CreationErrors);
-                var instance = ObjectFactory.With(command).GetInstance<IDialog<DisplayMessageCommand>>();
-                dialogLauncher.LaunchFor(command);
+                applicationController.Register(provider);   
             }
             else
             {
-                applicationController.Register(provider);   
+                var command = new DisplayMessageCommand(context.CreationErrors);
+                dialogLauncher.LaunchFor(command);
             }
         }
     }

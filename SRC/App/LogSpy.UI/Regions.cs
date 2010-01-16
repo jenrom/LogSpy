@@ -1,3 +1,4 @@
+using Microsoft.Practices.Composite.Regions;
 namespace LogSpy.UI
 {
     /// <summary>
@@ -9,5 +10,10 @@ namespace LogSpy.UI
         /// Represents the region that contains a view displaying the all log source entries
         /// </summary>
         public const string LogSourceView = "LogSourceView";
+
+        public static IRegion GetLogSourceViewRegion(this IRegionManager regionManager)
+        {
+            return regionManager.Regions[LogSourceView];
+        }
     }
 }

@@ -12,20 +12,20 @@ namespace LogSpy.Tests.Unit.UI
     public class OpenLogFileCommandTests
     {
         private IDialogLauncher dialogLauncher;
-        private ILogProviderFactory<LogFileProviderCreationContext> providerFactory;
+        private ILogProviderFactory<FileLogProviderCreationContext> providerFactory;
         private ILogProvider createdProvider;
         private IApplicationController applicationController;
-        private LogFileProviderCreationContext context;
+        private FileLogProviderCreationContext context;
         private string errorMessage = "error";
 
         [SetUp]
         public void before_each()
         {
             dialogLauncher = MockRepository.GenerateMock<IDialogLauncher>();
-            providerFactory = MockRepository.GenerateStub<ILogProviderFactory<LogFileProviderCreationContext>>();
+            providerFactory = MockRepository.GenerateStub<ILogProviderFactory<FileLogProviderCreationContext>>();
             createdProvider = MockRepository.GenerateStub<ILogProvider>();
             applicationController = MockRepository.GenerateMock<IApplicationController>();
-            context = new LogFileProviderCreationContext("log.txt");
+            context = new FileLogProviderCreationContext("log.txt");
         }
 
 
